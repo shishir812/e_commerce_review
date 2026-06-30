@@ -10,6 +10,10 @@ function normalizeApiBaseUrl(url) {
     return trimmedUrl;
   }
 
+  if (/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(trimmedUrl)) {
+    return `http://${trimmedUrl}`;
+  }
+
   return `https://${trimmedUrl}`;
 }
 
