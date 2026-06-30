@@ -8,7 +8,9 @@
 
 body {
   margin: 0;
-  background: #f5f7fb;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(245, 247, 251, 0) 240px),
+    #f5f7fb;
   color: #1f2937;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }

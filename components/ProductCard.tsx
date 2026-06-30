@@ -21,13 +21,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <div className="h-[88px]">
+        <div className="min-h-[88px]">
           <h2 className="line-clamp-1 min-h-6 text-base font-semibold text-ink">{product.title}</h2>
           <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-500">
             {product.description}
           </p>
         </div>
-        <div className="mt-2 flex min-h-[60px] items-end justify-between gap-2 border-t border-slate-100 pt-3">
+        <div className="mt-3 flex min-h-[64px] items-end justify-between gap-2 border-t border-slate-100 pt-3">
           <div className="min-w-0">
             <RatingStars rating={product.average_rating} size="sm" />
             <p className="mt-1 text-xs text-slate-500">
@@ -36,7 +36,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
           <Link
             href={`/products/${product.id}`}
-            className="shrink-0 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-600"
+            className="shrink-0 rounded-md bg-ink px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-primary"
           >
             Details
           </Link>

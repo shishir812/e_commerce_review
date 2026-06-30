@@ -21,6 +21,8 @@ export default function HomePage() {
     return matchesSearch && matchesRating;
   });
 
+  const totalReviews = products.reduce((total, product) => total + product.review_count, 0);
+
   useEffect(() => {
     async function loadProducts() {
       try {
@@ -36,9 +38,29 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <section className="mb-7 border-b border-slate-200 pb-6">
-        <h1 className="text-3xl font-semibold text-ink sm:text-4xl">Product Gallery</h1>
+    <main className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+      <section className="mb-6 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Review Debo</p>
+            <h1 className="mt-2 max-w-3xl text-3xl font-semibold text-ink sm:text-4xl">
+              Find products people actually talk about.
+            </h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+              Browse the catalog, compare ratings, and leave your own review after trying a product.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:w-72">
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
+              <p className="text-2xl font-semibold text-ink">{products.length}</p>
+              <p className="mt-1 text-xs font-medium text-slate-500">Products</p>
+            </div>
+            <div className="rounded-md border border-slate-200 bg-slate-50 p-4">
+              <p className="text-2xl font-semibold text-ink">{totalReviews}</p>
+              <p className="mt-1 text-xs font-medium text-slate-500">Reviews</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <LoadingError loading={loading} error={error} loadingText="Loading products..." />
@@ -63,17 +85,17 @@ export default function HomePage() {
                 className="rounded-md border border-slate-300 px-3 py-2.5 text-sm outline-none transition hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/20"
               >
                 <option value="all">All ratings</option>
-                <option value="5">★★★★★</option>
-                <option value="4">★★★★☆ & up</option>
-                <option value="3">★★★☆☆ & up</option>
-                <option value="2">★★☆☆☆ & up</option>
-                <option value="1">★☆☆☆☆ & up</option>
+                <option value="5">5 stars</option>
+                <option value="4">4 stars and up</option>
+                <option value="3">3 stars and up</option>
+                <option value="2">2 stars and up</option>
+                <option value="1">1 star and up</option>
               </select>
             </label>
           </section>
 
           {filteredProducts.length ? (
-            <section className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <section className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}

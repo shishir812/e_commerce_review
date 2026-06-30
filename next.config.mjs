@@ -1,5 +1,22 @@
 /** @type {import('next').NextConfig} */
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+function normalizeApiBaseUrl(url) {
+  const trimmedUrl = url?.trim().replace(/\/+$/, "");
+
+  if (!trimmedUrl) {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(trimmedUrl)) {
+    return trimmedUrl;
+  }
+
+  return `https://${trimmedUrl}`;
+}
+
+const apiBaseUrl =
+  normalizeApiBaseUrl(process.env.NEXT_PUBLIC_API_BASE_URL) ??
+  normalizeApiBaseUrl(process.env.NEXT_PUBLIC_API_URL) ??
+  "http://localhost:8000";
 
 const apiImagePattern = apiBaseUrl
   ? (() => {
@@ -33,6 +50,14 @@ const nextConfig = {
         pathname: "/uploads/**"
       }
     ].concat(apiImagePattern ? [apiImagePattern] : [])
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/backend/:path*",
+        destination: `${apiBaseUrl}/:path*`
+      }
+    ];
   }
 };
 
